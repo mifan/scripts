@@ -44,8 +44,12 @@ tar -xzf $NGINX_UPLOAD_MODULE_SOURCE.tar.gz
 
 #extract check
 
-#libgeoip-dev foe geo
+#libgeoip-dev for geo
 dpkg -l libgeoip-dev || apt-get install libgeoip-dev
+
+#nginx required lib
+dpkg -l libpcre3-dev || apt-get install libpcre3-dev
+
 
 
 cd $WORKSPACE/$NGINX_SOURCE
