@@ -9,11 +9,12 @@ set -eu
 
 
 WORKSPACE=/home/mifan/workspace
-INSTLL_LOCATION=/usr/local/nginx-1.0.1
+NGINX_VERSION=1.0.2
+INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION
 
 #nginx
 #NGINX_TAR=nginx-1.0.1.tar.gz
-NGINX_SOURCE=nginx-1.0.1
+NGINX_SOURCE=nginx-$NGINX_VERSION
 
 
 #nginx_upload_module
