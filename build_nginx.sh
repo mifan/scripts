@@ -51,6 +51,11 @@ dpkg -s libgeoip-dev || apt-get -y install libgeoip-dev
 dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
 dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
 dpkg -s libssl-dev   || apt-get -y install libssl-dev
+dpkg -s zlib1g-dev   || apt-get -y install zlib1g-dev
+
+#add a requrie lib for the ruby/rvm(not relly need for nginx)
+dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
+
 
 
 cd $WORKSPACE/$NGINX_SOURCE
