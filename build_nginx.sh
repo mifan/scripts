@@ -53,7 +53,9 @@ dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
 dpkg -s libssl-dev   || apt-get -y install libssl-dev
 dpkg -s zlib1g-dev   || apt-get -y install zlib1g-dev
 
-#add a requrie lib for the ruby/rvm(not relly need for nginx)
+#add a requrie lib for the ruby/rvm(not really need for nginx)
+#ubuntu already installed libreadline6-dev as default, 
+#  but why still require libreadline5-dev??
 dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
 
 
