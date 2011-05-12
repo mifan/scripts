@@ -3,18 +3,25 @@
 set -eu
 
 ####################################################
-#nginx: http://nginx.org/download/nginx-1.0.1.tar.gz
-#nginx_upload_module http://www.grid.net.ru/nginx/download/nginx_upload_module-2.2.0.tar.gz
-#
+# nginx: http://nginx.org/download/nginx-1.0.1.tar.gz
+# nginx_upload_module http://www.grid.net.ru/nginx/download/nginx_upload_module-2.2.0.tar.gz
+# NOTICE: before run this script, do following steps
+# copy nginx int script to /etc/init.d/
+# sudo chmod +x /etc/init.d/nginx
+# sudo /usr/sbin/update-rc.d -f nginx defaults
+####################################################
 
-ACTION_TIME=`/bin/date +%Y%m%d%H%M%S`
+BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 
 WORKSPACE=/home/mifan/workspace
+CONFIG_FILE=$WORKSPACE/nginx/nginx.conf
+
 NGINX_VERSION=1.0.2
-INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$ACTION_TIME
+INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
+LINK_LOCATION=/usr/local/nginx
 
 #nginx
-#NGINX_TAR=nginx-1.0.1.tar.gz
+#NGINX_TAR=nginx-1.0.2.tar.gz
 NGINX_SOURCE=nginx-$NGINX_VERSION
 
 
@@ -72,4 +79,17 @@ cd $WORKSPACE/$NGINX_SOURCE
             --prefix=$INSTLL_LOCATION
 
 make
+
+make install
+
+if [ -f $CONFIG_FILE ] ; then
+  cp -f $CONFIG_FILE  $INSTLL_LOCATION/conf
+fi
+
+/etc/init.d/nginx stop
+rm -rf $LINK_LOCATION
+ln -s  $LINK_LOCATION $INSTLL_LOCATION
+/etc/init.d/nginx start
+
+
 
