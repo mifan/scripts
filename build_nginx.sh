@@ -7,10 +7,11 @@ set -eu
 #nginx_upload_module http://www.grid.net.ru/nginx/download/nginx_upload_module-2.2.0.tar.gz
 #
 
+ACTION_TIME=`/bin/date +%Y%m%d%H%M%S`
 
 WORKSPACE=/home/mifan/workspace
 NGINX_VERSION=1.0.2
-INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION
+INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$ACTION_TIME
 
 #nginx
 #NGINX_TAR=nginx-1.0.1.tar.gz
@@ -57,6 +58,7 @@ dpkg -s zlib1g-dev   || apt-get -y install zlib1g-dev
 #ubuntu already installed libreadline6-dev as default, 
 #  but why still require libreadline5-dev??
 dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
+dpkg -s libmysqlclient-dev || apt-get -y install libmysqlclient-dev
 
 
 
