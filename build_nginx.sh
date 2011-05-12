@@ -84,12 +84,19 @@ make install
 
 if [ -f $CONFIG_FILE ] ; then
   cp -f $CONFIG_FILE  $INSTLL_LOCATION/conf
+  echo "copied nginx config file."
 fi
 
 /etc/init.d/nginx stop
-rm -rf $LINK_LOCATION
-ln -s  $LINK_LOCATION $INSTLL_LOCATION
+echo "stop nginx service."
+
+[[ -d $LINK_LOCATION ]] && rm -rf $LINK_LOCATION
+ln -s  $INSTLL_LOCATION $LINK_LOCATION
+echo "ln nginx to work directory."
+
+
 /etc/init.d/nginx start
+echo "start nginx service."
 
 
 
