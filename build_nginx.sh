@@ -16,12 +16,12 @@ BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 WORKSPACE=/home/mifan/workspace
 CONFIG_FILE=$WORKSPACE/nginx/nginx.conf
 
-NGINX_VERSION=1.0.2
+NGINX_VERSION=1.0.3
 INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
 LINK_LOCATION=/usr/local/nginx
 
 #nginx
-#NGINX_TAR=nginx-1.0.2.tar.gz
+#NGINX_TAR=nginx-1.0.3.tar.gz
 NGINX_SOURCE=nginx-$NGINX_VERSION
 
 
