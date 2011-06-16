@@ -14,9 +14,9 @@ set -eu
 BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 
 WORKSPACE=/home/mifan/workspace
-CONFIG_FILE=$WORKSPACE/nginx/nginx.conf
+CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
 
-NGINX_VERSION=1.0.3
+NGINX_VERSION=1.0.4
 INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
 LINK_LOCATION=/usr/local/nginx
 
