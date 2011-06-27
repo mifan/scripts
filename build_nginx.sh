@@ -68,6 +68,9 @@ dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
 dpkg -s libmysqlclient-dev || apt-get -y install libmysqlclient-dev
 
 
+# check depepdence for nginx / rails
+dpkg -s imagemagick || apt-get -y install imagemagick
+
 
 cd $WORKSPACE/$NGINX_SOURCE
 
