@@ -16,7 +16,7 @@ BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 WORKSPACE=/home/mifan/workspace
 CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
 
-NGINX_VERSION=1.0.4
+NGINX_VERSION=1.0.8
 INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
 LINK_LOCATION=/usr/local/nginx
 
