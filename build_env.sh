@@ -12,6 +12,8 @@ WORKSPACE=/home/mifan/workspace
 #nginx
 NGINX_CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
 NGINX_VERSION=1.0.10
+#NGINX_INSTLL_VERSION_LOCATION is just for check if need build nginx
+NGINX_INSTLL_VERSION_LOCATION=/usr/local/nginx-$NGINX_VERSIO
 NGINX_INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
 NGINX_LINK_LOCATION=/usr/local/nginx
 NGINX_SOURCE=nginx-$NGINX_VERSION
@@ -21,18 +23,6 @@ NGINX_UPLOAD_MODULE_SOURCE=nginx_upload_module-2.2.0
 echo "change workspace to $WORKSPACE"
 cd $WORKSPACE
 
-
-
-
-
-
-
-
-
-
-
- 
- 
 
 check_install_essential() {
    dpkg -s build_essential || apt-get -y install build_essential
@@ -46,7 +36,9 @@ check_install_essential() {
 # sudo chmod +x /etc/init.d/nginx
 # sudo /usr/sbin/update-rc.d -f nginx defaults
 ####################################################
-check_build_nginx() {
+
+
+check_nginx_dependence() {
   #libgeoip-dev for geo
   dpkg -s libgeoip-dev || apt-get -y install libgeoip-dev
   #nginx required lib
@@ -54,11 +46,12 @@ check_build_nginx() {
   dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
   dpkg -s libssl-dev   || apt-get -y install libssl-dev
   dpkg -s zlib1g-dev   || apt-get -y install zlib1g-dev
+}
 
+clean_nginx_build_env() {
   #clean old directorys if existed
   [[ -d $NGINX_SOURCE ]] && rm -rf $NGINX_SOURCE
   [[ -d $NGINX_UPLOAD_MODULE_SOURCE ]] && rm -rf $NGINX_UPLOAD_MODULE_SOURCE
-
 
   #download sources
   if [ ! -f $NGINX_SOURCE.tar.gz ] ; then
@@ -67,12 +60,13 @@ check_build_nginx() {
   if [ ! -f $NGINX_UPLOAD_MODULE_SOURCE.tar.gz ] ; then
     wget http://www.grid.net.ru/nginx/download/$NGINX_UPLOAD_MODULE_SOURCE.tar.gz
   fi
-
-  #extract sources
+    #extract sources
   tar -xzf $NGINX_SOURCE.tar.gz
   tar -xzf $NGINX_UPLOAD_MODULE_SOURCE.tar.gz
+}
 
-  cd $WORKSPACE/$NGINX_SOURCE
+build_nginx() {
+ cd $WORKSPACE/$NGINX_SOURCE
 
   ./configure --with-http_geoip_module \
               --with-http_ssl_module \
@@ -98,6 +92,19 @@ check_build_nginx() {
 
   /etc/init.d/nginx start
   echo "start nginx service."
+
+}
+
+
+
+check_build_nginx() {
+
+  check_nginx_dependence
+
+  if [ ! -d $NGINX_INSTLL_VERSION_LOCATION ] ; then
+    clean_nginx_build_env
+    build_nginx
+  fi
 
 }
 
