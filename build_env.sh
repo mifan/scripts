@@ -28,7 +28,7 @@ check_workspace() {
   fi
 }
 
-check_install_essential() {
+check_build_essential() {
    dpkg -s build-essential || apt-get -y install build-essential
 }
 
