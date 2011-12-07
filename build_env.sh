@@ -13,7 +13,7 @@ WORKSPACE=/home/mifan/workspace
 NGINX_CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
 NGINX_VERSION=1.0.10
 #NGINX_INSTLL_VERSION_LOCATION is just for check if need build nginx
-NGINX_INSTLL_VERSION_LOCATION=/usr/local/nginx-$NGINX_VERSIO
+NGINX_INSTLL_VERSION_LOCATION=/usr/local/nginx-$NGINX_VERSION
 NGINX_INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
 NGINX_LINK_LOCATION=/usr/local/nginx
 NGINX_SOURCE=nginx-$NGINX_VERSION
@@ -95,7 +95,6 @@ config_recycle_nginx() {
     echo "copied original nginx config file."
   fi
 
-  
 
   if [ ! -f /etc/init.d/nginx ] ; then
     cp -f $RESOURCES_PATH/nginx/nginx  /etc/init.d/nginx
