@@ -4,7 +4,7 @@ set -eu
 
 BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 
-GIT_PATH=`pwd`
+RESOURCES_PATH=`pwd`
 
 WORKSPACE=/home/mifan/workspace
 
@@ -20,12 +20,16 @@ NGINX_SOURCE=nginx-$NGINX_VERSION
 #nginx_upload_module
 NGINX_UPLOAD_MODULE_SOURCE=nginx_upload_module-2.2.0
 
-echo "change workspace to $WORKSPACE"
-cd $WORKSPACE
 
+
+check_workspace() {
+  if [ ! -d $WORKSPACE ] ; then
+    mkdir -p $WORKSPACE
+  fi
+}
 
 check_install_essential() {
-   dpkg -s build_essential || apt-get -y install build_essential
+   dpkg -s build-essential || apt-get -y install build-essential
 }
 
 
@@ -49,6 +53,7 @@ check_nginx_dependence() {
 }
 
 clean_nginx_build_env() {
+  cd $WORKSPACE
   #clean old directorys if existed
   [[ -d $NGINX_SOURCE ]] && rm -rf $NGINX_SOURCE
   [[ -d $NGINX_UPLOAD_MODULE_SOURCE ]] && rm -rf $NGINX_UPLOAD_MODULE_SOURCE
@@ -66,8 +71,7 @@ clean_nginx_build_env() {
 }
 
 build_nginx() {
- cd $WORKSPACE/$NGINX_SOURCE
-
+  cd $WORKSPACE/$NGINX_SOURCE
   ./configure --with-http_geoip_module \
               --with-http_ssl_module \
               --with-http_flv_module \
@@ -78,9 +82,26 @@ build_nginx() {
   make
   make install
 
+}
+
+
+config_recycle_nginx() {
+
   if [ -f $NGINX_CONFIG_FILE ] ; then
     cp -f $NGINX_CONFIG_FILE  $NGINX_INSTLL_LOCATION/conf
     echo "copied nginx config file."
+  else
+    cp -f $RESOURCES_PATH/nginx/nginx.conf  $NGINX_INSTLL_LOCATION/conf
+    echo "copied original nginx config file."
+  fi
+
+  
+
+  if [ ! -f /etc/init.d/nginx ] ; then
+    cp -f $RESOURCES_PATH/nginx/nginx  /etc/init.d/nginx
+    echo "copied nginx config file."
+    chmod +x /etc/init.d/nginx
+    /usr/sbin/update-rc.d -f nginx defaults
   fi
 
   /etc/init.d/nginx stop
@@ -88,6 +109,7 @@ build_nginx() {
 
   [[ -d $NGINX_LINK_LOCATION ]] && rm -rf $NGINX_LINK_LOCATION
   ln -s  $NGINX_INSTLL_LOCATION $NGINX_LINK_LOCATION
+  ln -s  $NGINX_INSTLL_VERSION_LOCATION $NGINX_LINK_LOCATION
   echo "ln nginx to work directory."
 
   /etc/init.d/nginx start
@@ -96,11 +118,9 @@ build_nginx() {
 }
 
 
-
 check_build_nginx() {
 
   check_nginx_dependence
-
   if [ ! -d $NGINX_INSTLL_VERSION_LOCATION ] ; then
     clean_nginx_build_env
     build_nginx
@@ -114,6 +134,7 @@ check_install_mysql() {
   #  but why still require libreadline5-dev??
   dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
   dpkg -s libmysqlclient-dev || apt-get -y install libmysqlclient-dev
+  dpkg -s mysql-server || apt-get -y install mysql-server
 }
 
 
@@ -124,6 +145,7 @@ check_install_additional() {
 
 
 #steps for build a product server
+check_workspace
 check_build_essential
 check_build_nginx
 check_install_mysql
