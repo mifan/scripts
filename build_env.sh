@@ -123,6 +123,7 @@ check_build_nginx() {
   if [ ! -d $NGINX_INSTLL_VERSION_LOCATION ] ; then
     clean_nginx_build_env
     build_nginx
+    config_recycle_nginx
   fi
 
 }
