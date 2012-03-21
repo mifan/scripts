@@ -11,7 +11,7 @@ WORKSPACE=/home/mifan/workspace
 
 #nginx
 NGINX_CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
-NGINX_VERSION=1.0.10
+NGINX_VERSION=1.0.14
 #NGINX_INSTLL_VERSION_LOCATION is just for check if need build nginx
 NGINX_INSTLL_VERSION_LOCATION=/usr/local/nginx-$NGINX_VERSION
 NGINX_INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
