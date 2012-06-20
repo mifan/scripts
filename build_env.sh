@@ -6,12 +6,12 @@ BUILD_TIME=`/bin/date +%Y%m%d%H%M%S`
 
 RESOURCES_PATH=`pwd`
 
-WORKSPACE=/home/mifan/workspace
+WORKSPACE=/root/workspace
 
 
 #nginx
 NGINX_CONFIG_FILE=/usr/local/nginx/conf/nginx.conf
-NGINX_VERSION=1.0.14
+NGINX_VERSION=1.2.1
 #NGINX_INSTLL_VERSION_LOCATION is just for check if need build nginx
 NGINX_INSTLL_VERSION_LOCATION=/usr/local/nginx-$NGINX_VERSION
 NGINX_INSTLL_LOCATION=/usr/local/nginx-$NGINX_VERSION-$BUILD_TIME
@@ -46,7 +46,6 @@ check_nginx_dependence() {
   #libgeoip-dev for geo
   dpkg -s libgeoip-dev || apt-get -y install libgeoip-dev
   #nginx required lib
-  dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
   dpkg -s libpcre3-dev || apt-get -y install libpcre3-dev
   dpkg -s libssl-dev   || apt-get -y install libssl-dev
   dpkg -s zlib1g-dev   || apt-get -y install zlib1g-dev
