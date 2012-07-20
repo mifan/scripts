@@ -131,7 +131,7 @@ check_build_nginx() {
 check_install_mysql() {
   #ubuntu already installed libreadline6-dev as default, 
   #  but why still require libreadline5-dev??
-  dpkg -s libreadline5-dev || apt-get -y install libreadline5-dev
+  dpkg -s libreadline-dev || apt-get -y install libreadline-dev
   dpkg -s libmysqlclient-dev || apt-get -y install libmysqlclient-dev
   dpkg -s mysql-server || apt-get -y install mysql-server
 }
